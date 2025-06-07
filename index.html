@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LEMON Prank</title>
+  <style>
+    body {
+      background: black;
+      color: lime;
+      font-family: monospace;
+      text-align: center;
+      padding-top: 100px;
+      overflow: hidden;
+    }
+    .glitch {
+      font-size: 3rem;
+      animation: glitch 0.3s infinite;
+    }
+    @keyframes glitch {
+      0% { text-shadow: 2px 2px red; }
+      25% { text-shadow: -2px -2px blue; }
+      50% { text-shadow: 2px -2px green; }
+      75% { text-shadow: -2px 2px yellow; }
+      100% { text-shadow: 2px 2px red; }
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="glitch" id="title">LEMON</h1>
+  <h2 id="countdown">90</h2>
+
+  <button onclick="startExperience()">🎮 Mula</button>
+  <button onclick="toggleMute()">🔇 Mute / Unmute</button>
+
+  <audio id="glitchSound" src="glitch.mp3"></audio>
+  <audio id="beepSound" src="beep.mp3"></audio>
+  <audio id="jumpscareSound" src="jumpscare.mp3"></audio>
+
+  <script>
+    let muted = false;
+    const glitch = document.getElementById("glitchSound");
+    const beep = document.getElementById("beepSound");
+    const scare = document.getElementById("jumpscareSound");
+
+    function toggleMute() {
+      muted = !muted;
+    }
+
+    function playSound(audio) {
+      if (!muted) {
+        audio.currentTime = 0;
+        audio.play();
+      }
+    }
+
+    function startExperience() {
+      let count = 90;
+      const title = document.getElementById("title");
+      const counter = document.getElementById("countdown");
+
+      const interval = setInterval(() => {
+        count--;
+        counter.textContent = count;
+
+        // Ubah teks + bunyi glitch
+        const rand = Math.random();
+        if (rand < 0.3) title.textContent = "LXM0N";
+        else if (rand < 0.6) title.textContent = "@#!$%";
+        else title.textContent = "LEMON";
+
+        playSound(glitch);
+        playSound(beep);
+
+        if (count === 1) {
+          playSound(scare);
+        }
+
+        if (count <= 0) {
+          clearInterval(interval);
+          title.textContent = "LEMON";
+          counter.textContent = "90";
+        }
+
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>
